@@ -32,7 +32,7 @@ while cv2.waitKey(1) & 0xFF != ord('q'):
 
     for (x, y, w, h) in faces:
         id, confidence = recognizer.predict(frame_gray[y:y+h, x:x+w])
-        if confidence < 70:
+        if confidence < 50:
             text = f"{name_data[str(id)]} - {round(100-confidence, 2)}%"
             color = (0, 255, 0)
         else:

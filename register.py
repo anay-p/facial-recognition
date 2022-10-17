@@ -42,7 +42,7 @@ while True:
 
     key = cv2.waitKey(1) & 0xFF
     if key == ord(' '):
-        if len(detected_faces) != 0:
+        if len(detected_faces) == 1:
             recognizer.update([frame_gray[y: y+h, x: x+w]], np.array(id))
             json_data[str(id)] = name
             id += 1
