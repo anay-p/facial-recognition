@@ -24,7 +24,7 @@ while cv2.waitKey(1) & 0xFF != ord('q'):
 
     faces = face_cascade.detectMultiScale(
         frame_gray,
-        scaleFactor=1.2,
+        scaleFactor=1.1,
         minNeighbors=5,
         minSize=(20, 20),
         flags=cv2.CASCADE_SCALE_IMAGE
@@ -39,7 +39,7 @@ while cv2.waitKey(1) & 0xFF != ord('q'):
             text = "Unkown"
             color = (0, 0, 255)
         cv2.putText(frame_flip, text, (x, y+h+30), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 1, cv2.LINE_AA)
-        cv2.rectangle(frame_flip, (x, y), (x+w, y+h), (0, 0, 255), 2)
+        cv2.rectangle(frame_flip, (x, y), (x+w, y+h), color, 2)
 
     text = f"No of detected faces: {len(faces)}"
     cv2.putText(frame_flip, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
