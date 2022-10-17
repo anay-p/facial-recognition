@@ -33,19 +33,13 @@ while cv2.waitKey(1) & 0xFF != ord('q'):
     for (x, y, w, h) in faces:
         id, confidence = recognizer.predict(frame_gray[y:y+h, x:x+w])
         if confidence < 70:
-            cv2.rectangle(frame_flip, (x, y), (x+w, y+h), (0, 255, 0), 2)
-            cv2.putText(
-                frame_flip,
-                f"{name_data[str(id)]} - {round(100-confidence, 2)}%",
-                (x, y+h+30),
-                cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 1, cv2.LINE_AA)
+            text = f"{name_data[str(id)]} - {round(100-confidence, 2)}%"
+            color = (0, 255, 0)
         else:
-            cv2.putText(
-                frame_flip,
-                "Unknown",
-                (x, y+h+30),
-                cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 1, cv2.LINE_AA)
-            cv2.rectangle(frame_flip, (x, y), (x+w, y+h), (0, 0, 255), 2)
+            text = "Unkown"
+            color = (0, 0, 255)
+        cv2.putText(frame_flip, text, (x, y+h+30), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 1, cv2.LINE_AA)
+        cv2.rectangle(frame_flip, (x, y), (x+w, y+h), (0, 0, 255), 2)
 
     text = f"No of detected faces: {len(faces)}"
     cv2.putText(frame_flip, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
