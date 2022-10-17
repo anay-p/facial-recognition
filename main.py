@@ -9,13 +9,13 @@ with open("./data/details.json") as file:
     name_data = json.load(file)
 
 capture = cv2.VideoCapture(0)
-cv2.namedWindow("Face detection", cv2.WINDOW_AUTOSIZE)
+cv2.namedWindow("Face recognition", cv2.WINDOW_AUTOSIZE)
 
 def change_brightness(new_brightness_value):
     capture.set(10, new_brightness_value)
 
 brightness = capture.get(10)
-cv2.createTrackbar("Brightness", "Face detection", int(brightness), 256, change_brightness)
+cv2.createTrackbar("Brightness", "Face recognition", int(brightness), 256, change_brightness)
 
 while cv2.waitKey(1) & 0xFF != ord('q'):
     _, frame = capture.read()
@@ -44,7 +44,7 @@ while cv2.waitKey(1) & 0xFF != ord('q'):
     text = f"No of detected faces: {len(faces)}"
     cv2.putText(frame_flip, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
 
-    cv2.imshow("Face detection", frame_flip)
+    cv2.imshow("Face recognition", frame_flip)
 
 capture.release()
-cv2.destroyWindow("Face detection")
+cv2.destroyWindow("Face recognition")

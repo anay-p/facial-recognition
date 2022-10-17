@@ -8,7 +8,11 @@ with open("./data/details.json") as file:
 
 name = input("Enter the name: ")
 img_no = 0
-id = len(json_data)
+if name in json_data.values():
+    id = int([i for i in json_data if json_data[i] == name][0])
+else:
+    id = len(json_data)
+    json_data[str(id)] = name
 
 face_cascade = cv2.CascadeClassifier("./data/haarcascade_frontalface_default.xml")
 recognizer = cv2.face.LBPHFaceRecognizer.create()
@@ -17,7 +21,7 @@ if os.path.isfile("./data/recognizer.yml"):
     recognizer.read("./data/recognizer.yml")
 
 capture = cv2.VideoCapture(0)
-cv2.namedWindow("Face detection", cv2.WINDOW_AUTOSIZE)
+cv2.namedWindow("Face recognition", cv2.WINDOW_AUTOSIZE)
 
 while True:
     _, frame = capture.read()
@@ -38,14 +42,12 @@ while True:
     text = f"No of pics taken: {img_no}"
     cv2.putText(frame_flip, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
 
-    cv2.imshow("Face detection", frame_flip)
+    cv2.imshow("Face recognition", frame_flip)
 
     key = cv2.waitKey(1) & 0xFF
     if key == ord(' '):
         if len(detected_faces) == 1:
             recognizer.update([frame_gray[y: y+h, x: x+w]], np.array(id))
-            json_data[str(id)] = name
-            id += 1
             img_no += 1
     elif key == ord('q'):
         break
@@ -57,4 +59,4 @@ with open("./data/details.json", "w") as file:
 print("Registration complete.")
 
 capture.release()
-cv2.destroyWindow("Face detection")
+cv2.destroyWindow("Face recognition")
